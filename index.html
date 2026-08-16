@@ -133,7 +133,10 @@
     dialog.addEventListener('click', (event) => { if (event.target === dialog) closeImageDialog(); });
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !dialog.hidden) closeImageDialog(); });
     // 第一件作品改為 PDF，其他作品仍保留原有的圖片預覽功能。
-    document.title = '農田水利溝渠設計圖';
+    document.title = '藍圖世界繪圖工作室';
+    const brand = document.querySelector('.brand');
+    [...brand.childNodes].filter((node) => node.nodeType === Node.TEXT_NODE).forEach((node) => node.remove());
+    brand.append('藍圖世界繪圖工作室');
     const firstWorkTrigger = document.querySelector('.work:first-child .image-trigger');
     const firstWork = firstWorkTrigger.closest('.work');
     const pdfPreview = document.createElement('iframe');
