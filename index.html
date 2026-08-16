@@ -43,8 +43,10 @@
     .work:first-child { grid-row: span 2; background: #d0e8f3; }
     .work:nth-child(2) { background: linear-gradient(135deg, #fcdbad, #8f887e); } .work:nth-child(3) { background: linear-gradient(135deg, #d0e8f3, #8f887e); }
     .work::after { content:""; position: absolute; inset: 14px; border: 1px solid rgba(255,255,255,.55); pointer-events: none; }
-    .work-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center top; }
+    .work-image, .work-pdf { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: center top; }
+    .work-pdf { border: 0; background: #fff; pointer-events: none; }
     .image-trigger { position: absolute; inset: 0; display: block; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; }
+    .pdf-trigger { position: absolute; inset: 0; z-index: 2; display: block; cursor: pointer; }
     .image-trigger .work-image { position: static; display: block; }
     .work:first-child::before { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent, rgba(63,59,54,.82)); z-index: 1; }
     .work-secondary { grid-row: span 2; background: #fcdbad !important; }
@@ -62,7 +64,9 @@
     .zoom-controls { display: flex; gap: 6px; }
     .zoom-stage { display: grid; flex: 1 1 auto; min-height: 0; place-items: center; overflow: hidden; cursor: grab; touch-action: none; user-select: none; }
     .zoom-stage.is-panning { cursor: grabbing; }
-    .image-dialog img { display: block; max-width: 100%; max-height: 100%; margin: auto; object-fit: contain; transform: scale(var(--zoom, 1)); transition: transform .18s ease; pointer-events: none; }
+    .image-dialog img, .image-dialog iframe { display: block; max-width: 100%; max-height: 100%; margin: auto; object-fit: contain; transform: scale(var(--zoom, 1)); transition: transform .18s ease; pointer-events: none; }
+    .image-dialog iframe { width: 100%; height: 100%; border: 0; background: #fff; }
+    .image-dialog [hidden] { display: none; }
     @media (max-width: 720px) { nav { display: none; } .hero-inner, .contact-grid { grid-template-columns: 1fr; } .hero-inner { padding: 80px 0; } .blueprint-art { min-height: 280px; } section { padding: 70px 0; } .section-heading { display: block; } .section-heading p { margin-top: 16px; } .cards, .works { grid-template-columns: 1fr; } .works { grid-template-rows: repeat(2, 220px); } .work:first-child, .work-secondary { grid-row: auto; } .footer-inner { display: block; } }
   </style>
 </head>
@@ -128,6 +132,29 @@
     dialog.querySelector('.dialog-close').addEventListener('click', closeImageDialog);
     dialog.addEventListener('click', (event) => { if (event.target === dialog) closeImageDialog(); });
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !dialog.hidden) closeImageDialog(); });
+    // 第一件作品改為 PDF，其他作品仍保留原有的圖片預覽功能。
+    document.title = '農田水利溝渠設計圖';
+    const firstWorkTrigger = document.querySelector('.work:first-child .image-trigger');
+    const firstWork = firstWorkTrigger.closest('.work');
+    const pdfPreview = document.createElement('iframe');
+    pdfPreview.title = '農田水利溝渠設計圖';
+    pdfPreview.hidden = true;
+    dialog.querySelector('.zoom-stage').append(pdfPreview);
+    firstWorkTrigger.dataset.image = 'works-1-1.jpg';
+    delete firstWorkTrigger.dataset.pdf;
+    firstWorkTrigger.dataset.alt = '農田水利溝渠設計圖';
+    firstWorkTrigger.setAttribute('aria-label', '開啟農田水利溝渠設計圖');
+    firstWorkTrigger.innerHTML = '<img class="work-image" src="works-1-1.jpg" alt="農田水利溝渠設計圖">';
+    firstWork.querySelector('span').textContent = '農田水利溝渠設計圖';
+    firstWork.querySelector('strong').textContent = '農田水利溝渠設計圖';
+    document.querySelectorAll('.image-trigger').forEach((button) => {
+      button.addEventListener('click', () => {
+        const isPdf = Boolean(button.dataset.pdf);
+        pdfPreview.hidden = !isPdf;
+        dialogImage.hidden = isPdf;
+        pdfPreview.src = isPdf ? `${button.dataset.pdf}#view=FitH` : '';
+      });
+    });
   </script>
 </body>
 </html>
