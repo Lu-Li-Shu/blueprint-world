@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta name="description" content="藍圖世界繪圖工作室，將空間、建築與品牌想像轉化為清晰動人的視覺藍圖。">
   <title>藍圖世界繪圖工作室｜讓想像成為可見的藍圖</title>
   <style>
@@ -54,14 +55,14 @@
     .contact p { color: #625d56; } .contact .button { color: var(--ink); white-space: nowrap; }
     footer { padding: 26px 0; background: var(--ink); color: var(--sky); font-size: .84rem; }
     .footer-inner { display: flex; justify-content: space-between; gap: 20px; }
-    .image-dialog { width: min(1100px, calc(100% - 32px)); max-width: none; max-height: calc(100vh - 32px); padding: 16px; border: 0; background: #fff; box-shadow: 0 18px 70px rgba(0,0,0,.4); overflow: hidden; }
-    .image-dialog::backdrop { background: rgba(13,34,64,.78); }
+    .image-dialog { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; width: 100%; height: 100dvh; padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); background: rgba(13,34,64,.96); box-shadow: 0 18px 70px rgba(0,0,0,.4); overflow: hidden; }
+    .image-dialog[hidden] { display: none; }
     .dialog-close, .zoom-button { padding: 8px 13px; border: 0; background: var(--gold); color: var(--ink); font: inherit; font-weight: 800; cursor: pointer; }
-    .dialog-close { position: absolute; top: 24px; right: 24px; z-index: 2; }
-    .zoom-controls { position: absolute; top: 24px; left: 24px; z-index: 2; display: flex; gap: 6px; }
-    .zoom-stage { height: calc(100vh - 64px); display: grid; place-items: center; overflow: hidden; cursor: grab; touch-action: none; user-select: none; }
+    .dialog-toolbar { display: flex; flex: 0 0 auto; justify-content: flex-start; align-items: center; gap: 12px; min-height: 44px; margin-bottom: 8px; }
+    .zoom-controls { display: flex; gap: 6px; }
+    .zoom-stage { display: grid; flex: 1 1 auto; min-height: 0; place-items: center; overflow: hidden; cursor: grab; touch-action: none; user-select: none; }
     .zoom-stage.is-panning { cursor: grabbing; }
-    .image-dialog img { display: block; max-width: 100%; max-height: calc(100vh - 64px); margin: auto; object-fit: contain; transform: scale(var(--zoom, 1)); transition: transform .18s ease; pointer-events: none; }
+    .image-dialog img { display: block; max-width: 100%; max-height: 100%; margin: auto; object-fit: contain; transform: scale(var(--zoom, 1)); transition: transform .18s ease; pointer-events: none; }
     @media (max-width: 720px) { nav { display: none; } .hero-inner, .contact-grid { grid-template-columns: 1fr; } .hero-inner { padding: 80px 0; } .blueprint-art { min-height: 280px; } section { padding: 70px 0; } .section-heading { display: block; } .section-heading p { margin-top: 16px; } .cards, .works { grid-template-columns: 1fr; } .works { grid-template-rows: repeat(2, 220px); } .work:first-child, .work-secondary { grid-row: auto; } .footer-inner { display: block; } }
   </style>
 </head>
@@ -81,11 +82,11 @@
     </section>
     <section id="about"><div class="container section-heading"><div><p class="eyebrow" style="color:#8f887e">ABOUT THE STUDIO</p><h2>以設計梳理<br>每一個好想法。</h2></div><p>藍圖世界是一間專注於視覺化與空間敘事的繪圖工作室。我們相信一張好圖，不只傳達資訊，也能讓人看見未來的可能。</p></div></section>
     <section class="services" id="services"><div class="container"><div class="section-heading"><div><p class="eyebrow" style="color:#8f887e">WHAT WE DO</p><h2>服務項目</h2></div><p>用專業繪圖與設計思維，陪伴構想從第一條線，走向完整成果。</p></div><div class="cards"><article class="card"><span class="number">01 / SPACE</span><h3>空間與建築繪圖</h3><p>平面配置、立面與透視圖，精準呈現空間的尺度、氛圍與使用情境。</p></article><article class="card"><span class="number">02 / VISUAL</span><h3>品牌視覺設計</h3><p>建立具辨識度的視覺語言，讓品牌的個性在每個接觸點清楚發聲。</p></article><article class="card"><span class="number">03 / STORY</span><h3>提案與概念視覺</h3><p>將複雜概念整理成易懂、動人的圖像敘事，讓溝通更有說服力。</p></article></div></div></section>
-    <section id="works"><div class="container"><div class="section-heading"><div><p class="eyebrow" style="color:#8f887e">SELECTED WORKS</p><h2>精選作品</h2></div><p>每一次合作，都是一段從問題出發、為理想找到形狀的設計旅程。</p></div><div class="works"><article class="work"><button class="image-trigger" type="button" data-image="works-1.jpg" data-alt="省道路燈詳圖" aria-label="放大觀看省道路燈詳圖"><img class="work-image" src="works-1.jpg" alt="省道路燈詳圖"></button><span>Street Light Detail</span><strong>省道路燈詳圖</strong></article><article class="work work-secondary"><button class="image-trigger" type="button" data-image="works-2.png" data-alt="2026雲林設計獎參賽作品" aria-label="放大觀看2026雲林設計獎參賽作品"><img class="work-image" src="works-2.png" alt="2026雲林設計獎參賽作品"></button><strong>2026雲林設計獎參賽作品</strong></article></div></div></section>
+    <section id="works"><div class="container"><div class="section-heading"><div><p class="eyebrow" style="color:#8f887e">SELECTED WORKS</p><h2>精選作品</h2></div><p>每一次合作，都是一段從問題出發、為理想找到形狀的設計旅程。</p></div><div class="works"><article class="work"><button class="image-trigger" type="button" data-image="works-1.jpg" data-alt="省道路燈詳圖" aria-label="放大觀看省道路燈詳圖"><img class="work-image" src="works-1.jpg" alt="省道路燈詳圖"></button><span>Street Light Detail</span><strong>省道路燈詳圖</strong></article><article class="work work-secondary"><button class="image-trigger" type="button" data-image="works-2-web.jpg" data-alt="2026雲林設計獎參賽作品" aria-label="放大觀看2026雲林設計獎參賽作品"><img class="work-image" src="works-2-web.jpg" alt="2026雲林設計獎參賽作品"></button><strong>2026雲林設計獎參賽作品</strong></article></div></div></section>
     <section class="contact" id="contact"><div class="container contact-grid"><div><p class="eyebrow" style="color:#625d56">LET'S CREATE TOGETHER</p><h2>準備好畫出<br>下一個藍圖了嗎？</h2><p>告訴我們你的想法，讓我們一起把它做成值得被看見的作品。</p></div><a class="button" href="mailto:waterbar0418@gmail.com">waterbar0418@gmail.com</a></div></section>
   </main>
   <footer><div class="container footer-inner"><span>© 2026 藍圖世界繪圖工作室</span><span>Yunlin county in Taiwan</span></div></footer>
-  <dialog class="image-dialog" id="image-dialog" aria-label="放大圖片"><div class="zoom-controls"><button class="zoom-button" type="button" data-zoom="out" aria-label="縮小圖片">−</button><button class="zoom-button" type="button" data-zoom="in" aria-label="放大圖片">＋</button></div><button class="dialog-close" type="button">關閉</button><div class="zoom-stage"><img src="" alt=""></div></dialog>
+  <div class="image-dialog" id="image-dialog" role="dialog" aria-modal="true" aria-label="放大圖片" hidden><div class="dialog-toolbar"><div class="zoom-controls"><button class="zoom-button" type="button" data-zoom="out" aria-label="縮小圖片">−</button><button class="zoom-button" type="button" data-zoom="in" aria-label="放大圖片">＋</button><button class="dialog-close" type="button">關閉</button></div></div><div class="zoom-stage"><img src="" alt=""></div></div>
   <script>
     const dialog = document.querySelector('#image-dialog');
     const dialogImage = dialog.querySelector('img');
@@ -103,7 +104,8 @@
         panX = 0;
         panY = 0;
         setZoom(1);
-        dialog.showModal();
+        dialog.hidden = false;
+        dialog.querySelector('.dialog-close').focus();
       });
     });
     dialog.querySelectorAll('.zoom-button').forEach((button) => button.addEventListener('click', () => setZoom(zoom + (button.dataset.zoom === 'in' ? .2 : -.2))));
@@ -122,8 +124,10 @@
     const stopPanning = () => { pointerStart = undefined; zoomStage.classList.remove('is-panning'); };
     zoomStage.addEventListener('pointerup', stopPanning);
     zoomStage.addEventListener('pointercancel', stopPanning);
-    dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
-    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    const closeImageDialog = () => { dialog.hidden = true; };
+    dialog.querySelector('.dialog-close').addEventListener('click', closeImageDialog);
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) closeImageDialog(); });
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !dialog.hidden) closeImageDialog(); });
   </script>
 </body>
 </html>
